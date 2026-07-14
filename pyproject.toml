@@ -1,0 +1,70 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "kestrel"
+version = "0.1.0-alpha"
+description = "AI-powered security assessment platform for authorized security professionals."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+
+authors = [
+    { name = "Waqas Mohey Ud Din" }
+]
+
+keywords = [
+    "security",
+    "cybersecurity",
+    "assessment",
+    "automation",
+    "cli",
+    "python",
+    "kali"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License"
+]
+
+dependencies = [
+    "typer>=0.16",
+    "rich>=14.0",
+    "platformdirs>=4.3",
+    "PyYAML>=6.0",
+    "SQLAlchemy>=2.0",
+    "pydantic>=2.11",
+    "loguru>=0.7"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4",
+    "pytest-cov>=6.2",
+    "black>=25.1",
+    "ruff>=0.12",
+    "mypy>=1.17"
+]
+
+[project.scripts]
+kestrel = "kestrel.cli.app:app"
+
+[tool.black]
+line-length = 100
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
