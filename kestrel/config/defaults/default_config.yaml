@@ -1,0 +1,22 @@
+application:
+  name: Kestrel
+  version: 0.1.0-alpha
+
+database:
+  engine: sqlite
+  file: kestrel.db
+
+logging:
+  level: INFO
+  file: kestrel.log
+  rotation: 10 MB
+  retention: 30 days
+
+workspace:
+  directory: ~/Kestrel
+
+reports:
+  default_format: html
+
+ai:
+  enabled: false
