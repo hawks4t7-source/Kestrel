@@ -4,7 +4,7 @@ Kestrel Application Bootstrap
 This module initializes all core services before the CLI starts.
 """
 
-from loguru import logger
+from kestrel.core.logger import logger
 
 from kestrel.config.manager import load_config
 
