@@ -1,26 +1,29 @@
 """
-Kestrel Application Bootstrap
+Kestrel Application Bootstrap.
 
-This module initializes all core services before the CLI starts.
+Delegates application startup to the Bootstrap Engine.
 """
 
-from kestrel.core.logger import logger
+from __future__ import annotations
 
-from kestrel.config.manager import load_config
+from kestrel.bootstrap.application import KestrelApplication
+from kestrel.bootstrap.lifecycle import ApplicationLifecycle
 
 
-def initialize() -> None:
+def initialize() -> KestrelApplication:
     """
     Initialize the Kestrel application.
+
+    Returns
+    -------
+    KestrelApplication
+        Running application instance.
     """
 
-    logger.info("======================================")
-    logger.info("Starting Kestrel...")
-    logger.info("Loading configuration...")
+    app = KestrelApplication()
 
-    config = load_config()
+    lifecycle = ApplicationLifecycle(app)
 
-    logger.info("Configuration loaded successfully.")
-    logger.info(f"Workspace: {config.workspace.directory}")
-    logger.info(f"Database : {config.database.file}")
-    logger.info("Bootstrap completed.")
+    lifecycle.startup()
+
+    return app
