@@ -1,31 +1,73 @@
+# =========================
 # Python
+# =========================
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyd
 
-# Virtual environments
+# =========================
+# Virtual Environments
+# =========================
 .venv/
 venv/
+env/
 
-# Build artifacts
+# =========================
+# Build / Packaging
+# =========================
 build/
 dist/
 *.egg-info/
+.eggs/
 
+# =========================
 # IDE
+# =========================
 .vscode/
 .idea/
 
+# =========================
 # Operating System
+# =========================
 .DS_Store
 Thumbs.db
 
+# =========================
 # Logs
+# =========================
 *.log
 
-# Coverage
+# =========================
+# Testing
+# =========================
 .coverage
 htmlcov/
-
-# Pytest
 .pytest_cache/
+
+# =========================
+# Runtime Data
+# =========================
+config/
+database/
+logs/
+loot/
+exports/
+projects/
+reports/
+screenshots/
+temp/
+
+# =========================
+# Database Files
+# =========================
+*.db
+*.sqlite
+*.sqlite3
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.bak
+*.swp

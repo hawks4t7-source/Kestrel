@@ -7,12 +7,23 @@ from rich.console import Console
 from rich.panel import Panel
 
 from kestrel import __version__
+from kestrel.cli.commands.project import project_app
+from kestrel.cli.commands.target import target_app
 
 app = typer.Typer(
     help="AI-powered security assessment platform."
 )
 
 console = Console()
+app.add_typer(
+    project_app,
+    name="project"
+)
+
+app.add_typer(
+    target_app,
+    name="target"
+)
 
 
 @app.callback(invoke_without_command=True)
@@ -44,3 +55,5 @@ def doctor() -> None:
     Perform a basic environment check.
     """
     console.print("[green]✓[/green] CLI loaded successfully.")
+
+    

@@ -1,41 +1,106 @@
 """
 Database manager.
+
+Handles database initialization,
+engine creation and session access.
 """
 
 from __future__ import annotations
 
-from loguru import logger
-from sqlalchemy.orm import Session
+from sqlalchemy import inspect, create_engine
+from sqlalchemy.orm import sessionmaker, Session
 
-from .base import Base
-from .engine import create_database_engine
-from .session import create_session
-from .session import create_session_factory
+from kestrel.core.logger import logger
+from kestrel.config.manager import load_config
+
+from kestrel.database.models import (
+    Base,
+    Project,
+    Target,
+    Asset,
+    Finding,
+    Evidence,
+)
 
 
 class DatabaseManager:
     """
-    Central database manager.
+    Manages SQLAlchemy database lifecycle.
     """
 
     def __init__(self) -> None:
-
-        self.engine = create_database_engine()
-
-        self.session_factory = create_session_factory(
-            self.engine
-        )
+        self.engine = None
+        self.SessionLocal = None
 
     def initialize(self) -> None:
+        """
+        Initialize database engine
+        and create tables.
+        """
 
         logger.info("Initializing database...")
 
-        Base.metadata.create_all(self.engine)
+        config = load_config()
 
-        logger.success("Database initialized.")
+        database_url = (
+            f"sqlite:///{config.database.file}"
+        )
+
+        self.engine = create_engine(
+            database_url,
+            echo=False,
+        )
+
+        self.SessionLocal = sessionmaker(
+            bind=self.engine,
+            autocommit=False,
+            autoflush=False,
+        )
+
+        # Register models
+        # Importing models ensures SQLAlchemy
+        # knows all metadata
+        _ = (
+            Project,
+            Target,
+            Asset,
+            Finding,
+            Evidence,
+        )
+
+        # Create database tables
+        Base.metadata.create_all(
+            bind=self.engine
+        )
+
+        logger.success(
+            "Database initialized."
+        )
 
     def session(self) -> Session:
+        """
+        Create a new database session.
+        """
 
-        return create_session(
-            self.session_factory
+        if self.SessionLocal is None:
+            raise RuntimeError(
+                "Database is not initialized."
+            )
+
+        return self.SessionLocal()
+
+    def tables(self) -> list[str]:
+        """
+        Return available database tables.
+        """
+
+        if self.engine is None:
+            raise RuntimeError(
+                "Database is not initialized."
+            )
+
+        inspector = inspect(
+            self.engine
         )
+
+        return inspector.get_table_names()
