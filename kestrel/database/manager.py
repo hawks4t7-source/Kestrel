@@ -57,7 +57,7 @@ class DatabaseManager:
             autoflush=False,
         )
 
-        # Register models
+         # Register models
         # Importing models ensures SQLAlchemy
         # knows all metadata
         _ = (
@@ -68,10 +68,7 @@ class DatabaseManager:
             Evidence,
         )
 
-        # Create database tables
-        Base.metadata.create_all(
-            bind=self.engine
-        )
+        # Database schema is managed by Alembic.
 
         logger.success(
             "Database initialized."

@@ -33,23 +33,22 @@ class Asset(Base, TimestampMixin):
         nullable=False,
     )
 
-    asset_type: Mapped[str] = mapped_column(
-        String(50),
-        nullable=False,
-        default="unknown",
-    )
-
-    value: Mapped[str] = mapped_column(
+    hostname: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
     )
 
-    technology: Mapped[str | None] = mapped_column(
+    ip_address: Mapped[str] = mapped_column(
+        String(45),
+        nullable=False,
+    )
+
+    operating_system: Mapped[str | None] = mapped_column(
         String(255),
         nullable=True,
     )
 
-    operating_system: Mapped[str | None] = mapped_column(
+    technology: Mapped[str | None] = mapped_column(
         String(255),
         nullable=True,
     )

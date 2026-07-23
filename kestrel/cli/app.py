@@ -9,6 +9,7 @@ from rich.panel import Panel
 from kestrel import __version__
 from kestrel.cli.commands.project import project_app
 from kestrel.cli.commands.target import target_app
+from kestrel.cli.commands.asset import asset_app
 
 app = typer.Typer(
     help="AI-powered security assessment platform."
@@ -24,7 +25,10 @@ app.add_typer(
     target_app,
     name="target"
 )
-
+app.add_typer(
+    asset_app,
+    name="asset",
+)
 
 @app.callback(invoke_without_command=True)
 def main() -> None:
