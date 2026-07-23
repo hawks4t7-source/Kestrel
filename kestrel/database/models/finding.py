@@ -1,14 +1,14 @@
 """
 Finding database model.
 
-Stores discovered security vulnerabilities and observations.
+Stores vulnerabilities discovered during assessments.
 """
 
 from __future__ import annotations
 
 import uuid
 
-from sqlalchemy import String, Text, ForeignKey
+from sqlalchemy import Float, ForeignKey, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from kestrel.database.models.base import Base
@@ -39,15 +39,20 @@ class Finding(Base, TimestampMixin):
     )
 
     severity: Mapped[str] = mapped_column(
-        String(50),
-        default="informational",
+        String(20),
         nullable=False,
+        default="info",
+    )
+
+    cvss_score: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
     )
 
     status: Mapped[str] = mapped_column(
-        String(50),
-        default="open",
+        String(30),
         nullable=False,
+        default="open",
     )
 
     description: Mapped[str | None] = mapped_column(
@@ -55,12 +60,7 @@ class Finding(Base, TimestampMixin):
         nullable=True,
     )
 
-    impact: Mapped[str | None] = mapped_column(
-        Text,
-        nullable=True,
-    )
-
-    remediation: Mapped[str | None] = mapped_column(
+    recommendation: Mapped[str | None] = mapped_column(
         Text,
         nullable=True,
     )
@@ -75,3 +75,5 @@ class Finding(Base, TimestampMixin):
         back_populates="finding",
         cascade="all, delete-orphan",
     )
+
+    

@@ -1,7 +1,7 @@
 """
 Evidence database model.
 
-Stores proof and artifacts related to findings.
+Stores evidence attached to findings.
 """
 
 from __future__ import annotations
@@ -17,7 +17,7 @@ from kestrel.database.models.mixins import TimestampMixin
 
 class Evidence(Base, TimestampMixin):
     """
-    Represents evidence collected during an assessment.
+    Evidence attached to a finding.
     """
 
     __tablename__ = "evidence"
@@ -33,23 +33,23 @@ class Evidence(Base, TimestampMixin):
         nullable=False,
     )
 
-    evidence_type: Mapped[str] = mapped_column(
-        String(50),
-        nullable=False,
-        default="unknown",
-    )
-
-    title: Mapped[str] = mapped_column(
+    filename: Mapped[str] = mapped_column(
         String(255),
         nullable=False,
     )
 
-    file_path: Mapped[str | None] = mapped_column(
+    file_path: Mapped[str] = mapped_column(
         String(500),
-        nullable=True,
+        nullable=False,
     )
 
-    description: Mapped[str | None] = mapped_column(
+    evidence_type: Mapped[str] = mapped_column(
+        String(50),
+        nullable=False,
+        default="file",
+    )
+
+    notes: Mapped[str | None] = mapped_column(
         Text,
         nullable=True,
     )

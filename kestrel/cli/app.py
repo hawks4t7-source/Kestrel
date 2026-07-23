@@ -10,6 +10,8 @@ from kestrel import __version__
 from kestrel.cli.commands.project import project_app
 from kestrel.cli.commands.target import target_app
 from kestrel.cli.commands.asset import asset_app
+from kestrel.cli.commands.finding import finding_app
+from kestrel.cli.commands.evidence import evidence_app
 
 app = typer.Typer(
     help="AI-powered security assessment platform."
@@ -25,9 +27,20 @@ app.add_typer(
     target_app,
     name="target"
 )
+
 app.add_typer(
     asset_app,
     name="asset",
+)
+
+app.add_typer(
+    finding_app,
+    name="finding",
+)
+
+app.add_typer(
+    evidence_app,
+    name="evidence"
 )
 
 @app.callback(invoke_without_command=True)
